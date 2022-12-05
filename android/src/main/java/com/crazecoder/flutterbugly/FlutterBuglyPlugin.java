@@ -100,11 +100,11 @@ public class FlutterBuglyPlugin implements FlutterPlugin, MethodCallHandler, Act
                 Beta.canShowUpgradeActs.add(activity.getClass());
 
                 String appId = call.argument("appId").toString();
-                Bugly.init(activity.getApplicationContext(), appId, BuildConfig.DEBUG);
+                CrashReport.initCrashReport(activity.getApplicationContext(), appId, BuildConfig.DEBUG);
                 if (call.hasArgument("channel")) {
                     String channel = call.argument("channel");
                     if (!TextUtils.isEmpty(channel))
-                        Bugly.setAppChannel(activity.getApplicationContext(), channel);
+                        CrashReport.setAppChannel(activity.getApplicationContext(), channel);
                 }
                 result(getResultBean(true, appId, "Bugly 初始化成功"));
             } else {
@@ -113,21 +113,21 @@ public class FlutterBuglyPlugin implements FlutterPlugin, MethodCallHandler, Act
         } else if (call.method.equals("setUserId")) {
             if (call.hasArgument("userId")) {
                 String userId = call.argument("userId");
-                Bugly.setUserId(activity.getApplicationContext(), userId);
+                CrashReport.setUserId(userId);
             }
             result(null);
         } else if (call.method.equals("setUserTag")) {
             if (call.hasArgument("userTag")) {
                 Integer userTag = call.argument("userTag");
                 if (userTag != null)
-                    Bugly.setUserTag(activity.getApplicationContext(), userTag);
+                    CrashReport.setUserSceneTag(activity.getApplicationContext(), userTag);
             }
             result(null);
         } else if (call.method.equals("putUserData")) {
             if (call.hasArgument("key") && call.hasArgument("value")) {
                 String userDataKey = call.argument("key");
                 String userDataValue = call.argument("value");
-                Bugly.putUserData(activity.getApplicationContext(), userDataKey, userDataValue);
+                CrashReport.putUserData(activity.getApplicationContext(), userDataKey, userDataValue);
             }
             result(null);
         } else if (call.method.equals("checkUpgrade")) {
@@ -147,7 +147,7 @@ public class FlutterBuglyPlugin implements FlutterPlugin, MethodCallHandler, Act
         } else if (call.method.equals("setAppChannel")) {
             String channel = call.argument("channel");
             if (!TextUtils.isEmpty(channel)) {
-                Bugly.setAppChannel(activity.getApplicationContext(), channel);
+                CrashReport.setAppChannel(activity.getApplicationContext(), channel);
             }
             result(null);
         } else if (call.method.equals("postCatchedException")) {
