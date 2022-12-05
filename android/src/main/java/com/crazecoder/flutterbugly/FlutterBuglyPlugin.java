@@ -10,9 +10,9 @@ import com.crazecoder.flutterbugly.bean.BuglyInitResultInfo;
 import com.crazecoder.flutterbugly.utils.JsonUtil;
 import com.crazecoder.flutterbugly.utils.MapUtil;
 import com.tencent.bugly.Bugly;
-import com.tencent.bugly.beta.Beta;
-import com.tencent.bugly.beta.UpgradeInfo;
-import com.tencent.bugly.beta.upgrade.UpgradeListener;
+//import com.tencent.bugly.beta.Beta;
+//import com.tencent.bugly.beta.UpgradeInfo;
+//import com.tencent.bugly.beta.upgrade.UpgradeListener;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.HashMap;
@@ -56,48 +56,48 @@ public class FlutterBuglyPlugin implements FlutterPlugin, MethodCallHandler, Act
         this.result = result;
         if (call.method.equals("initBugly")) {
             if (call.hasArgument("appId")) {
-                if (call.hasArgument("autoInit")) {
-                    Beta.autoInit = false;
-                }
-                if (call.hasArgument("enableHotfix")) {
-                    Beta.enableHotfix = call.argument("enableHotfix");
-                }
-                if (call.hasArgument("autoCheckUpgrade")) {
-                    Beta.autoCheckUpgrade = call.argument("autoCheckUpgrade");
-                }
-                if (call.hasArgument("autoDownloadOnWifi")) {
-                    Beta.autoDownloadOnWifi = call.argument("autoDownloadOnWifi");
-                }
-                if (call.hasArgument("initDelay")) {
-                    int delay = call.argument("initDelay");
-                    Beta.initDelay = delay * 1000;
-                }
-                if (call.hasArgument("enableNotification")) {
-                    Beta.enableNotification = call.argument("enableNotification");
-                }
-                if (call.hasArgument("upgradeCheckPeriod")) {
-                    int period = call.argument("upgradeCheckPeriod");
-                    Beta.upgradeCheckPeriod = period * 1000;
-                }
-                if (call.hasArgument("showInterruptedStrategy")) {
-                    Beta.showInterruptedStrategy = call.argument("showInterruptedStrategy");
-                }
-                if (call.hasArgument("canShowApkInfo")) {
-                    Beta.canShowApkInfo = call.argument("canShowApkInfo");
-                }
-                if (call.hasArgument("customUpgrade")) {
-                    boolean customUpgrade = call.argument("customUpgrade");
-                    /*在application中初始化时设置监听，监听策略的收取*/
-                    Beta.upgradeListener = customUpgrade ? new UpgradeListener() {
-                        @Override
-                        public void onUpgrade(int ret, UpgradeInfo strategy, boolean isManual, boolean isSilence) {
-                            Map<String, Object> data = new HashMap<>();
-                            data.put("upgradeInfo", JsonUtil.toJson(MapUtil.deepToMap(strategy)));
-                            channel.invokeMethod("onCheckUpgrade", data);
-                        }
-                    } : null;
-                }
-                Beta.canShowUpgradeActs.add(activity.getClass());
+//                if (call.hasArgument("autoInit")) {
+//                    Beta.autoInit = false;
+//                }
+//                if (call.hasArgument("enableHotfix")) {
+//                    Beta.enableHotfix = call.argument("enableHotfix");
+//                }
+//                if (call.hasArgument("autoCheckUpgrade")) {
+//                    Beta.autoCheckUpgrade = call.argument("autoCheckUpgrade");
+//                }
+//                if (call.hasArgument("autoDownloadOnWifi")) {
+//                    Beta.autoDownloadOnWifi = call.argument("autoDownloadOnWifi");
+//                }
+//                if (call.hasArgument("initDelay")) {
+//                    int delay = call.argument("initDelay");
+//                    Beta.initDelay = delay * 1000;
+//                }
+//                if (call.hasArgument("enableNotification")) {
+//                    Beta.enableNotification = call.argument("enableNotification");
+//                }
+//                if (call.hasArgument("upgradeCheckPeriod")) {
+//                    int period = call.argument("upgradeCheckPeriod");
+//                    Beta.upgradeCheckPeriod = period * 1000;
+//                }
+//                if (call.hasArgument("showInterruptedStrategy")) {
+//                    Beta.showInterruptedStrategy = call.argument("showInterruptedStrategy");
+//                }
+//                if (call.hasArgument("canShowApkInfo")) {
+//                    Beta.canShowApkInfo = call.argument("canShowApkInfo");
+//                }
+//                if (call.hasArgument("customUpgrade")) {
+//                    boolean customUpgrade = call.argument("customUpgrade");
+//                    /*在application中初始化时设置监听，监听策略的收取*/
+//                    Beta.upgradeListener = customUpgrade ? new UpgradeListener() {
+//                        @Override
+//                        public void onUpgrade(int ret, UpgradeInfo strategy, boolean isManual, boolean isSilence) {
+//                            Map<String, Object> data = new HashMap<>();
+//                            data.put("upgradeInfo", JsonUtil.toJson(MapUtil.deepToMap(strategy)));
+//                            channel.invokeMethod("onCheckUpgrade", data);
+//                        }
+//                    } : null;
+//                }
+//                Beta.canShowUpgradeActs.add(activity.getClass());
 
                 String appId = call.argument("appId").toString();
                 CrashReport.initCrashReport(activity.getApplicationContext(), appId, BuildConfig.DEBUG);
@@ -131,19 +131,19 @@ public class FlutterBuglyPlugin implements FlutterPlugin, MethodCallHandler, Act
             }
             result(null);
         } else if (call.method.equals("checkUpgrade")) {
-            boolean isManual = false;
-            boolean isSilence = false;
-            if (call.hasArgument("isManual")) {
-                isManual = call.argument("isManual");
-            }
-            if (call.hasArgument("isSilence")) {
-                isSilence = call.argument("isSilence");
-            }
-            Beta.checkUpgrade(isManual, isSilence);
-            result(null);
+//            boolean isManual = false;
+//            boolean isSilence = false;
+//            if (call.hasArgument("isManual")) {
+//                isManual = call.argument("isManual");
+//            }
+//            if (call.hasArgument("isSilence")) {
+//                isSilence = call.argument("isSilence");
+//            }
+////            Beta.checkUpgrade(isManual, isSilence);
+//            result(null);
         } else if (call.method.equals("getUpgradeInfo")) {
-            UpgradeInfo strategy = Beta.getUpgradeInfo();
-            result(strategy);
+//            UpgradeInfo strategy = Beta.getUpgradeInfo();
+//            result(strategy);
         } else if (call.method.equals("setAppChannel")) {
             String channel = call.argument("channel");
             if (!TextUtils.isEmpty(channel)) {
